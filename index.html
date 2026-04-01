@@ -14,10 +14,10 @@
       <img src="jobcloud12.png" alt="Job Cloud Logo" />
     </div>
     <text>Job Cloud</text>
-    <button class="post-job">Post Job</button>
-    <div class="home"><a href="#">Home</a></div>
-    <div class="connections"><a href="#">Connections</a></div>
-    <div class="learning"><a href="#">Learning</a></div>
+    <button class="post-job" onclick="if(checkAuth(event)) window.location.href='post-job.html'">Post Job</button>
+    <div class="home"><a href="index.html">Home</a></div>
+    <div class="companies"><a href="companies.html" onclick="return checkAuth(event)">Companies</a></div>
+    <div class="learning"><a href="learning.html" onclick="return checkAuth(event)">Learning</a></div>
     <div class="sign-in"><a href="login.html">Sign In</a></div>
     <div class="profile dropdown">
       <i class="fa-solid fa-user" style="color: #1d624e"></i>
@@ -107,6 +107,79 @@
     
     
     
+  <section class="latest-jobs" style="padding: 60px 20px; background: #fff; text-align: center;">
+    <h2 style="font-size: 32px; margin-bottom: 30px;">Latest Job Openings</h2>
+    <div id="latest-jobs-container" class="job-cards-container" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px;">
+      <!-- Dynamic jobs will be injected here -->
+      <p id="no-jobs-msg" style="color: #666; font-style: italic;">Fetching latest jobs...</p>
+    </div>
+  </section>
+
+  <script>
+    function getCompanyLogo(companyName) {
+      const name = companyName.toLowerCase();
+      if (name.includes('google')) return 'https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg';
+      if (name.includes('amazon')) return 'https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg';
+      if (name.includes('microsoft')) return 'https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg';
+      if (name.includes('tcs')) return 'tcslogo.png';
+      if (name.includes('infosys')) return 'infosyslogo.png';
+      
+      // Fallback for others: A clean tech-themed placeholder
+      return `https://ui-avatars.com/api/?name=${encodeURIComponent(companyName)}&background=1d624e&color=fff&size=128`;
+    }
+
+    async function fetchLatestJobs() {
+      const container = document.getElementById('latest-jobs-container');
+      const noJobsMsg = document.getElementById('no-jobs-msg');
+
+      try {
+        const response = await fetch('http://localhost:5000/api/jobs');
+        const jobs = await response.json();
+
+        if (jobs.length > 0) {
+          noJobsMsg.style.display = 'none';
+          container.innerHTML = ''; // Clear previous and "fetching" message
+          
+          jobs.forEach(job => {
+            const logoSrc = getCompanyLogo(job.companyName);
+            const jobCard = document.createElement('div');
+            jobCard.className = 'job-card';
+            jobCard.style.width = '100%';
+            jobCard.style.maxWidth = '600px';
+            jobCard.style.textAlign = 'left';
+
+            jobCard.innerHTML = `
+              <div class="logo">
+                <img src="${logoSrc}" alt="${job.companyName} Logo" style="width: 60px; height: 60px; object-fit: contain;">
+              </div>
+              <div class="details">
+                <h3>${job.jobTitle}</h3>
+                <p>${job.companyName} • ${job.location}</p>
+                <div class="meta">
+                  <span><i class="fa-solid fa-clock"></i> ${job.jobType}</span>
+                  <span><i class="fa-solid fa-calendar"></i> Posted ${new Date(job.created_at).toLocaleDateString()}</span>
+                </div>
+                <div class="job-description" style="margin-top: 10px; font-size: 14px; color: #555;">
+                  ${job.description.substring(0, 100)}${job.description.length > 100 ? '...' : ''}
+                </div>
+              </div>
+              <a href="application.html?job=${encodeURIComponent(job.jobTitle)}" onclick="return checkAuth(event)" class="apply-btn">Apply</a>
+            `;
+            container.appendChild(jobCard);
+          });
+        } else {
+          noJobsMsg.textContent = "No recent jobs found. Be the first to post!";
+        }
+      } catch (error) {
+        console.error("❌ Error fetching jobs:", error);
+        noJobsMsg.textContent = "Unable to load jobs at this time.";
+      }
+    }
+
+    // Call fetch on load
+    window.onload = fetchLatestJobs;
+  </script>
+
   <section class="customer-support">
     <h2>Need Help?</h2>
     <p>Our support team is here 24/7 to assist you with your queries.</p>
@@ -131,6 +204,7 @@
     </div>
   </footer>
 
+<script src="auth.js"></script>
 <script src="search.js"></script>
 
 </body>

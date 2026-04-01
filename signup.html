@@ -92,11 +92,19 @@
           body: JSON.stringify(userData)
         });
 
-        const data = await res.text();
-        alert(data);
+        const data = await res.json();
+        
         if (res.ok) {
-  window.location.href = "login.html"; // redirect to login
-}
+          // ✅ Save user info to localStorage for immediate login
+          localStorage.setItem("jobcloud_user", JSON.stringify({ 
+            fullname: data.fullname, 
+            email: data.email 
+          }));
+          alert(data.message);
+          window.location.href = "index.html"; 
+        } else {
+          alert(data.error || "Signup failed");
+        }
 
       });
     </script>

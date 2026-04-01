@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Post a Job - Job Cloud</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    .form-container {
+      background: white;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      max-width: 600px;
+      margin: 50px auto;
+    }
+    .form-container h2 {
+      margin-bottom: 25px;
+      color: #1d624e;
+      text-align: center;
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      color: #333;
+    }
+    .form-group input, .form-group textarea, .form-group select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      outline: none;
+      font-size: 14px;
+    }
+    .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+      border-color: #1d624e;
+    }
+    .submit-btn {
+      width: 100%;
+      background-color: #1d624e;
+      color: white;
+      padding: 14px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+    .submit-btn:hover {
+      background-color: #15503f;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="logo">
+      <img src="jobcloud12.png" alt="Job Cloud Logo" />
+    </div>
+    <text>Job Cloud</text>
+    <button class="post-job" onclick="window.location.href='post-job.html'">Post Job</button>
+    <div class="home"><a href="index.html">Home</a></div>
+    <div class="companies"><a href="companies.html">Companies</a></div>
+    <div class="learning"><a href="learning.html">Learning</a></div>
+    <div class="sign-in"><a href="login.html">Sign In</a></div>
+    <div class="profile dropdown">
+      <i class="fa-solid fa-user" style="color: #1d624e"></i>
+      <span class="profile-text">Profile</span>
+      <div class="dropdown-content">
+        <a href="#">View Profile</a>
+        <a href="#">Settings</a>
+        <a href="#">Sign Out</a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="job-page-header">
+    <h3>Post a New Job Opportunity</h3>
+  </section>
+
+  <div class="form-container">
+    <h2>Job Details</h2>
+    <form id="postJobForm">
+      <div class="form-group">
+        <label for="jobTitle">Job Title</label>
+        <input type="text" id="jobTitle" required placeholder="e.g. Software Engineer">
+      </div>
+      <div class="form-group">
+        <label for="companyName">Company Name</label>
+        <input type="text" id="companyName" required placeholder="e.g. Google">
+      </div>
+      <div class="form-group">
+        <label for="location">Location</label>
+        <input type="text" id="location" required placeholder="e.g. Bengaluru, Remote">
+      </div>
+      <div class="form-group">
+        <label for="jobType">Job Type</label>
+        <select id="jobType" required>
+          <option value="Full-time">Full-time</option>
+          <option value="Part-time">Part-time</option>
+          <option value="Contract">Contract</option>
+          <option value="Internship">Internship</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="description">Job Description</label>
+        <textarea id="description" rows="5" required placeholder="Describe the role and responsibilities..."></textarea>
+      </div>
+      <button type="submit" class="submit-btn">Post Job</button>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById("postJobForm").addEventListener("submit", async function(e) {
+      e.preventDefault();
+
+      const jobData = {
+        jobTitle: document.getElementById("jobTitle").value,
+        companyName: document.getElementById("companyName").value,
+        location: document.getElementById("location").value,
+        jobType: document.getElementById("jobType").value,
+        description: document.getElementById("description").value
+      };
+
+      try {
+        const response = await fetch("http://localhost:5000/post-job", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(jobData)
+        });
+
+        const data = await response.text();
+        alert(data);
+
+        if (response.ok) {
+          window.location.href = "index.html"; 
+        }
+      } catch (error) {
+        console.error("❌ Error posting job:", error);
+        alert("Failed to connect to the server. Please ensure the backend is running.");
+      }
+    });
+  </script>
+
+  <footer>
+    <div class="footer-content">
+      <p>&copy; 2024 Job Cloud. All rights reserved.</p>
+      <div class="social-icons">
+        <a href="#"><i class="fa-brands fa-instagram"></i></a>
+        <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+        <a href="#"><i class="fa-brands fa-twitter"></i></a>
+      </div>
+      <div class="footer-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+      </div>
+      <div class="footer-contact">
+        <p>Contact us: <a href="mailto:contact@jobcloud.com">contact@jobcloud.com</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="auth.js"></script>
+  <script>protectPage();</script>
+</body>
+</html>

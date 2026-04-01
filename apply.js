@@ -10,6 +10,10 @@ document.getElementById("applicationForm").addEventListener("submit", async func
 
   const form = event.target;
   const formData = new FormData(form);
+  
+  // Append the job title to the application
+  const jobTitle = document.getElementById("jobTitle").innerText;
+  formData.append("job_title", jobTitle);
 
   try {
     const response = await fetch('http://localhost:5000/submit-application', {

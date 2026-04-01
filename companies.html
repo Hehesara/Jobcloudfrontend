@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Featured Companies - Job Cloud</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style>
+        .companies-hub {
+            padding: 60px 20px;
+            max-width: 1100px;
+            margin: auto;
+            text-align: center;
+        }
+        .companies-hub h2 {
+            font-size: 36px;
+            margin-bottom: 40px;
+            color: #333;
+        }
+        .company-suggestions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        .company-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 1px solid #eee;
+        }
+        .company-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+        }
+        .company-logo {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+            margin-bottom: 20px;
+        }
+        .company-card h3 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: #1d624e;
+        }
+        .suggested-jobs-list {
+            text-align: left;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        .suggested-jobs-list span {
+            display: block;
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 8px;
+            padding-bottom: 8px;
+            border-bottom: 1px dashed #eee;
+        }
+        .suggested-jobs-list span:last-child {
+            border-bottom: none;
+        }
+        .view-all-btn {
+            background-color: #1d624e;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            margin-top: auto;
+            transition: background 0.3s;
+        }
+        .view-all-btn:hover {
+            background-color: #15503f;
+        }
+    </style>
+</head>
+<body>
+
+  <nav>
+    <div class="logo">
+      <img src="jobcloud12.png" alt="Job Cloud Logo" />
+    </div>
+    <text>Job Cloud</text>
+    <button class="post-job" onclick="window.location.href='post-job.html'">Post Job</button>
+    <div class="home"><a href="index.html">Home</a></div>
+    <div class="companies"><a href="companies.html">Companies</a></div>
+    <div class="learning"><a href="learning.html">Learning</a></div>
+    <div class="sign-in"><a href="login.html">Sign In</a></div>
+    <div class="profile dropdown">
+      <i class="fa-solid fa-user" style="color: #1d624e"></i>
+      <span class="profile-text">Profile</span>
+      <div class="dropdown-content">
+        <a href="#">View Profile</a>
+        <a href="#">Settings</a>
+        <a href="#">Sign Out</a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="job-page-header">
+    <h3>Top Companies & Career Opportunities</h3>
+  </section>
+
+  <section class="companies-hub">
+    <h2>Hiring Developers at Top Tech Firms</h2>
+    <div class="company-suggestions">
+      
+      <!-- Google -->
+      <div class="company-card">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" alt="Google Logo" class="company-logo">
+        <h3>Google</h3>
+        <div class="suggested-jobs-list">
+            <span>✨ Software Engineer (Bengaluru)</span>
+            <span>✨ Cloud Architect (Hyderabad)</span>
+            <span>✨ UI/UX Designer (Remote)</span>
+        </div>
+        <a href="google-jobs.html" class="view-all-btn">View All Google Jobs</a>
+      </div>
+
+      <!-- Amazon -->
+      <div class="company-card">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" alt="Amazon Logo" class="company-logo">
+        <h3>Amazon</h3>
+        <div class="suggested-jobs-list">
+            <span>✨ SDE-II (Chennai)</span>
+            <span>✨ Backend Developer (Pune)</span>
+            <span>✨ Quality Assurance (Delhi)</span>
+        </div>
+        <a href="amazon-jobs.html" class="view-all-btn">View All Amazon Jobs</a>
+      </div>
+
+      <!-- Microsoft -->
+      <div class="company-card">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" alt="Microsoft Logo" class="company-logo">
+        <h3>Microsoft</h3>
+        <div class="suggested-jobs-list">
+            <span>✨ Frontend Developer (Mumbai)</span>
+            <span>✨ Security Engineer (Noida)</span>
+            <span>✨ Data Engineer (Bengaluru)</span>
+        </div>
+        <a href="microsoft-jobs.html" class="view-all-btn">View All Microsoft Jobs</a>
+      </div>
+
+    </div>
+  </section>
+
+  <footer style="margin-top: 80px;">
+    <div class="footer-content">
+      <p>&copy; 2024 Job Cloud. All rights reserved.</p>
+      <div class="social-icons">
+        <a href="#"><i class="fa-brands fa-instagram"></i></a>
+        <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+        <a href="#"><i class="fa-brands fa-twitter"></i></a>
+      </div>
+      <div class="footer-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+      </div>
+      <div class="footer-contact">
+        <p>Contact us: <a href="mailto:contact@jobcloud.com">contact@jobcloud.com</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="auth.js"></script>
+  <script>protectPage();</script>
+</body>
+</html>
